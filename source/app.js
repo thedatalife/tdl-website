@@ -2,4 +2,7 @@
 
 import 'app.css';
 
-console.log('hello world');
+function foo(one: any, two: number, three?): string {
+  const safeThree = three || 'three';
+  return `hello world ${one} ${two} ${safeThree.toString()}`;
+}
