@@ -11,7 +11,8 @@
     "dev": "webpack-dev-server"
   },
   "dependencies": {
-    "normalize.css": "^5.0.0"
+    "normalize.css": "^5.0.0",
+    "three": "^0.84.0"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
@@ -21,6 +22,7 @@
     "css-loader": "^0.26.1",
     "flow-bin": "^0.38.0",
     "flow-webpack-plugin": "^0.3.6",
+    "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
     "webpack": "2",
     "webpack-dev-server": "2"

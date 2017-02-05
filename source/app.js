@@ -1,8 +1,9 @@
-/* @flow */
+// @flow
 
 import 'app.css';
 
-function foo(one: any, two: number, three?): string {
-  const safeThree = three || 'three';
-  return `hello world ${one} ${two} ${safeThree.toString()}`;
-}
+import Scenes from './scenes';
+import Home from './scenes/home';
+
+const scene = new Scenes();
+scene.playScene(new Home());
