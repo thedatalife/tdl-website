@@ -36,8 +36,14 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.glsl$/,
-        use: ['raw-loader']
+        test: /\.(glsl|frag|vert)$/,
+        use: ['raw-loader'],
+        exclude: [/node_modules/]
+      },
+      {
+        test: /\.(glsl|frag|vert)$/,
+        use: ['glslify-loader'],
+        exclude: [/node_modules/]
       }
     ],
   },

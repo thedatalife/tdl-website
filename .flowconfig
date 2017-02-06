@@ -1,5 +1,5 @@
 [ignore]
-
+.*/findup/test/.*
 [include]
 
 [libs]

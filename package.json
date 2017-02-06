@@ -11,8 +11,14 @@
     "dev": "webpack-dev-server"
   },
   "dependencies": {
+    "glsl-fxaa": "^3.0.0",
+    "glslify": "^6.0.1",
+    "glslify-loader": "^1.0.2",
     "normalize.css": "^5.0.0",
-    "three": "^0.84.0"
+    "three": "^0.84.0",
+    "three-effectcomposer": "^0.0.1",
+    "three-shader-fxaa": "^5.1.1",
+    "three-vignette-background": "^1.0.3"
   },
   "devDependencies": {
     "babel-core": "^6.22.1",
