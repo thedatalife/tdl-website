@@ -11,7 +11,9 @@
     "dev": "webpack-dev-server"
   },
   "dependencies": {
+    "glsl-fog": "^0.0.1",
     "glsl-fxaa": "^3.0.0",
+    "glsl-lut": "^1.1.0",
     "glslify": "^6.0.1",
     "glslify-loader": "^1.0.2",
     "normalize.css": "^5.0.0",

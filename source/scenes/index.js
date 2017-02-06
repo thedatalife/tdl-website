@@ -42,6 +42,29 @@ class Application {
     this.composer.addPass(new EffectComposer.RenderPass(this.scene, this.camera));
     this.composer.addPass(new EffectComposer.ShaderPass(createFXAA()));
 
+    // Add the Lookup Table shader
+    const lut = new EffectComposer.ShaderPass({
+      vertexShader: require('./shaders/pass.vert'),
+      fragmentShader: require('./shaders/lut.frag'),
+      uniforms: {
+        tDiffuse: {
+          type: 't',
+          value: new THREE.Texture()
+        },
+        tLookup: {
+          type: 't',
+          value: new THREE.Texture()
+        }
+      }
+    });
+    this.composer.addPass(lut);
+
+    const tLookup = new THREE.TextureLoader().load('images/haze.png');
+    tLookup.generateMipmaps = false;
+    tLookup.minFilter = THREE.LinearFilter;
+    lut.uniforms.tLookup.value = tLookup;
+
+
     this.composer.passes[this.composer.passes.length - 1].renderToScreen = true;
 
     if (document.body) {
@@ -50,6 +73,8 @@ class Application {
 
     var background = createBackground();
     this.scene.add(background);
+
+    this.scene.fog = new THREE.Fog(0x000000, 1, 100);
 
     this.resize();
     this.render();
