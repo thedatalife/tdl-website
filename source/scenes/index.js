@@ -2,6 +2,7 @@
 
 import * as THREE from 'three';
 import { Scene, PerspectiveCamera, WebGLRenderer, WebGLRenderTarget } from 'three';
+import BokehPass from './effects/BokehPass';
 import createBackground from './background';
 
 const createFXAA = require('./fxaa');
@@ -27,8 +28,11 @@ class Application {
     this.camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
     this.camera.position.z = 5;
 
-    this.renderer = new WebGLRenderer();
+    this.renderer = new WebGLRenderer({
+      antialias: false
+    });
     this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setPixelRatio(window.devicePixelRatio);
 
     this.target = new THREE.WebGLRenderTarget(window.innerWidth, window.innerHeight);
     this.target.texture.stencil = false;
@@ -64,11 +68,21 @@ class Application {
     tLookup.minFilter = THREE.LinearFilter;
     lut.uniforms.tLookup.value = tLookup;
 
+    const bokehPass = new BokehPass(this.scene, this.camera, {
+      focus: 0.8,
+      aperture: 0.005,
+      maxblur: 1.0,
+
+      width: window.innerWidth,
+      height: window.innerHeight
+    });
+    this.composer.addPass(bokehPass);
 
     this.composer.passes[this.composer.passes.length - 1].renderToScreen = true;
 
     if (document.body) {
       document.body.appendChild(this.renderer.domElement);
+      this.renderer.sortObjects = false;
     }
 
     var background = createBackground();
