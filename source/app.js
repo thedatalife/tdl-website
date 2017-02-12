@@ -1,9 +1,10 @@
-// @flow
-
 import 'app.css';
 
-import Scenes from './scenes';
-import Home from './scenes/home';
+import WebGLApp from './webgl';
+import Home from './webgl/app/home';
 
-const scene = new Scenes();
-scene.playScene(new Home());
+const webglApp = new WebGLApp(document.body, {
+  debug: true
+});
+
+webglApp.playApp(new Home());

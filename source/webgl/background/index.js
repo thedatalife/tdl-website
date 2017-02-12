@@ -52,7 +52,7 @@ function createBackground(opt) {
       },
       color1: {
         type: 'c',
-        value: new THREE.Color('#fff')
+        value: new THREE.Color('#000')
       },
       color2: {
         type: 'c',
