@@ -1,7 +1,7 @@
 // @flow
 
 import * as THREE from 'three';
-import { Scene, PerspectiveCamera, WebGLRenderer, WebGLRenderTarget, FogExp2 } from 'three';
+import { Scene, PerspectiveCamera, WebGLRenderer, WebGLRenderTarget, FogExp2, Clock } from 'three';
 import OrbitControls from 'orbit-controls-es6';
 
 
@@ -14,6 +14,7 @@ class WebGLApplication {
   app: any;
   state: Object;
   postprocessing: any;
+  clock: Class<Clock>;
   scene: Class<Scene>;
   camera: Class<PerspectiveCamera>;
   renderer: Class<WebGLRenderer>;
@@ -23,6 +24,7 @@ class WebGLApplication {
     this.debug = options.debug || false;
 
     this.state = {};
+    this.clock = new Clock(true);
 
     this.init();
     this.resize();
@@ -78,6 +80,8 @@ class WebGLApplication {
       this.render();
     });
 
+    this.state.time = this.clock.getElapsedTime();
+
     this.app.update(this.state);
     this.postprocessing.update(this.state);
 
@@ -102,7 +106,7 @@ class WebGLApplication {
   handleMouseMove(e: MouseEvent) {
     this.setState({
       mouseX: e.offsetX / this.domElement.offsetWidth,
-      mouseY: e.offsetY / this.domElement.offsetHeight,
+      mouseY: 1 - (e.offsetY / this.domElement.offsetHeight),
       movementX: e.movementX,
       movementY: e.movementY
     })

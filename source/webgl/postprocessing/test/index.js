@@ -18,12 +18,20 @@ export default class TestShader {
         type: 'f',
         value: 1.0
       },
-      mouseX: {
+      fMouseY: {
         type: 'f',
         value: 0
       },
-      mouseY: {
+      fMouseX: {
         type: 'f',
+        value: 0
+      },
+      fTime: {
+        type: 'f',
+        value: 0
+      },
+      iSide: {
+        type: 'i',
         value: 0
       }
     };
@@ -37,10 +45,13 @@ export default class TestShader {
 
   update(state: Object) {
     if (state.mouseX) {
-      this.shaderPass.uniforms.mouseX.value = state.mouseX;
+      this.shaderPass.uniforms.fMouseX.value = state.mouseX;
     }
     if (state.mouseY) {
-      this.shaderPass.uniforms.mouseY.value = state.mouseY;
+      this.shaderPass.uniforms.fMouseY.value = state.mouseY;
+    }
+    if (state.time) {
+      this.shaderPass.uniforms.fTime.value = state.time;
     }
   }
 }
