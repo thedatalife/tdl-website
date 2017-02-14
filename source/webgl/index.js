@@ -12,6 +12,7 @@ class WebGLApplication {
   domElement: HTMLElement;
   debug: boolean;
   app: any;
+  state: Object;
   postprocessing: any;
   scene: Class<Scene>;
   camera: Class<PerspectiveCamera>;
@@ -20,6 +21,8 @@ class WebGLApplication {
   constructor(domElement: HTMLElement, options: Object) {
     this.domElement = domElement;
     this.debug = options.debug || false;
+
+    this.state = {};
 
     this.init();
     this.resize();
@@ -38,6 +41,8 @@ class WebGLApplication {
       controls.maxDistance = 1500;
       controls.minDistance = 0;
     }
+
+    this.domElement.addEventListener('mousemove', this.handleMouseMove.bind(this));
   }
 
   setupCamera() {
@@ -73,8 +78,8 @@ class WebGLApplication {
       this.render();
     });
 
-    this.app.update();
-    this.postprocessing.update();
+    this.app.update(this.state);
+    this.postprocessing.update(this.state);
 
     //this.renderer.render(this.scene, this.camera);
     this.postprocessing.render();
@@ -86,6 +91,21 @@ class WebGLApplication {
     this.app = app;
     this.app.init(this.scene, this.camera);
     this.render();
+  }
+
+  setState(stateUpdate: Object) {
+    this.state = Object.assign({}, this.state, stateUpdate);
+  }
+
+  // Event Handlers
+
+  handleMouseMove(e: MouseEvent) {
+    this.setState({
+      mouseX: e.offsetX / this.domElement.offsetWidth,
+      mouseY: e.offsetY / this.domElement.offsetHeight,
+      movementX: e.movementX,
+      movementY: e.movementY
+    })
   }
 }
 
