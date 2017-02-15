@@ -1,6 +1,6 @@
 // @flow
 
-import { WebGLRenderTarget, LinearFilter, RGBFormat } from 'three';
+import { WebGLRenderTarget, LinearFilter, RGBFormat, Vector2 } from 'three';
 import EffectComposer, { RenderPass, ShaderPass, CopyShader } from 'three-effectcomposer-es6';
 import FXAA from './fxaa';
 import LookupTable from './lookuptable';
@@ -27,17 +27,20 @@ class PostProcessing {
     this.target.texture.format = RGBFormat;
     this.target.texture.generateMipmaps = false;
 
-    this.effects.push(new TestShader());
+    this.effects.push(new FXAA({
+      resolution: new Vector2(window.innerWidth, window.innerHeight)
+    }));
+    this.effects.push(new LookupTable());
+    //this.effects.push(new TestShader());
+
 
     this.composer = new EffectComposer(this.renderer);
     this.composer.addPass(new RenderPass(this.scene, this.camera));
+
     this.effects.forEach((effect) => {
       console.log('Adding effects to the composer.', effect);
       this.composer.addPass(effect.shaderPass);
     });
-    //this.composer.addPass(FXAA());
-    //this.composer.addPass(LookupTable());
-    //this.composer.addPass(TestShader());
 
     const copyPass = new ShaderPass(CopyShader);
     copyPass.renderToScreen = true;

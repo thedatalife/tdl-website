@@ -2,14 +2,17 @@
 
 import { Texture, TextureLoader, LinearFilter } from 'three';
 import { ShaderPass } from 'three-effectcomposer-es6';
+import PostEffect from '../PostEffect';
 
-export default class LookupTableShader {
+export default class LookupTableShader extends PostEffect {
   uniforms: Object;
   shaderPass: Class<ShaderPass>;
   constructor(options: ?Object) {
+    super();
+
     options = options || {};
 
-    this.uniforms = {
+    const uniforms = {
       tDiffuse: {
         type: 't',
         value: new Texture()
@@ -20,17 +23,15 @@ export default class LookupTableShader {
       }
     };
 
-    this.shaderPass = new ShaderPass({
-      uniforms: this.uniforms,
-      vertexShader: require('./lookuptable.vert'),
-      fragmentShader: require('./lookuptable.frag')
-    });
+    this.init(
+      uniforms,
+      require('./lookuptable.vert'),
+      require('./lookuptable.frag')
+    );
 
     const tLookup = new TextureLoader().load('images/haze.png');
     tLookup.generateMipmaps = false;
     tLookup.minFilter = LinearFilter;
     this.shaderPass.uniforms.tLookup.value = tLookup;
   }
-
-  update(state: Object) {}
 }

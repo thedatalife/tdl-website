@@ -1,24 +1,25 @@
 import { Texture, Vector2 } from 'three';
 import { ShaderPass } from 'three-effectcomposer-es6';
+import PostEffect from '../PostEffect';
 
-export default function(opt) {
-  opt = opt || {};
+export default class FXAA extends PostEffect {
+  constructor(options: ?Object) {
+    super();
 
-  const fxaa = new ShaderPass({
-    uniforms: {
+    options = options || {};
+
+    const uniforms = {
       tDiffuse: {
         type: 't',
         value: new Texture()
       },
       resolution: {
         type: 'v2',
-        value: opt.resolution || new Vector2()
+        value: options.resolution || new Vector2()
       }
-    },
-    vertexShader: require('./fxaa.vert'),
-    fragmentShader: require('./fxaa.frag')
-  });
+    };
 
-  console.log('fxaa', fxaa);
-  return fxaa;
+    this.init(uniforms, require('./fxaa.vert'), require('./fxaa.frag'));
+  }
+
 }

@@ -2,14 +2,15 @@
 
 import { Texture, TextureLoader, LinearFilter } from 'three';
 import { ShaderPass } from 'three-effectcomposer-es6';
+import PostEffect from '../PostEffect';
 
-export default class TestShader {
-  uniforms: Object;
+export default class TestShader extends PostEffect {
   shaderPass: Class<ShaderPass>;
   constructor(options: ?Object) {
+    super();
     options = options || {};
 
-    this.uniforms = {
+    const uniforms = {
       tDiffuse: {
         type: 't',
         value: new Texture()
@@ -36,22 +37,17 @@ export default class TestShader {
       }
     };
 
-    this.shaderPass = new ShaderPass({
-      uniforms: this.uniforms,
-      vertexShader: require('./test.vert'),
-      fragmentShader: require('./test.frag')
-    });
-  }
+    const stateBindings = {
+      mouseX: 'fMouseX.value',
+      mouseY: 'fMouseY.value',
+      time: 'fTime.value'
+    };
 
-  update(state: Object) {
-    if (state.mouseX) {
-      this.shaderPass.uniforms.fMouseX.value = state.mouseX;
-    }
-    if (state.mouseY) {
-      this.shaderPass.uniforms.fMouseY.value = state.mouseY;
-    }
-    if (state.time) {
-      this.shaderPass.uniforms.fTime.value = state.time;
-    }
+    this.init(
+      uniforms,
+      require('./test.vert'),
+      require('./test.frag'),
+      stateBindings
+    );
   }
 }
