@@ -14,7 +14,6 @@ class PostProcessing {
   target: any;
   effects: Array<any>;
   constructor(renderer: any, scene: any, camera: any) {
-    console.log('new PostProcessing', renderer, scene, camera);
     this.renderer = renderer;
     this.scene = scene;
     this.camera = camera;
@@ -38,7 +37,6 @@ class PostProcessing {
     this.composer.addPass(new RenderPass(this.scene, this.camera));
 
     this.effects.forEach((effect) => {
-      console.log('Adding effects to the composer.', effect);
       this.composer.addPass(effect.shaderPass);
     });
 
