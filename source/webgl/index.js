@@ -76,6 +76,7 @@ class WebGLApplication {
   setupScene() {
     const scene = new Scene();
     const background = GradientBackground();
+    background.raytrace = false;
 
     scene.add(background);
     // scene.fog = new FogExp2(0x000000, 0.00025);
@@ -127,10 +128,10 @@ class WebGLApplication {
     const intersects = this.raycaster.intersectObjects(this.scene.children);
     const hoverIntersect = {};
     if (intersects.length > 0) {
-      hoverIntersect.uuid = intersects[intersects.length - 1].object.uuid;
-      hoverIntersect.point = intersects[intersects.length - 1].point;
-      hoverIntersect.face = intersects[intersects.length - 1].face;
-      hoverIntersect.uv = intersects[intersects.length - 1].uv;
+      hoverIntersect.uuid = intersects[0].object.uuid;
+      hoverIntersect.point = intersects[0].point;
+      hoverIntersect.face = intersects[0].face;
+      hoverIntersect.uv = intersects[0].uv;
     }
     this.setState({
       hoverIntersect
@@ -153,12 +154,13 @@ class WebGLApplication {
 
     this.raycaster.setFromCamera(mouse, this.camera);
     const intersects = this.raycaster.intersectObjects(this.scene.children);
+    console.log(intersects);
     const clickIntersect = {};
     if (intersects.length > 0) {
-      clickIntersect.uuid = intersects[intersects.length - 1].object.uuid;
-      clickIntersect.point = intersects[intersects.length - 1].point;
-      clickIntersect.face = intersects[intersects.length - 1].face;
-      clickIntersect.uv = intersects[intersects.length - 1].uv;
+      clickIntersect.uuid = intersects[0].object.uuid;
+      clickIntersect.point = intersects[0].point;
+      clickIntersect.face = intersects[0].face;
+      clickIntersect.uv = intersects[0].uv;
     }
     this.setState({
       clickIntersect

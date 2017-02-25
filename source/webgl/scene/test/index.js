@@ -1,7 +1,7 @@
 // @flow
 
 import { MeshBasicMaterial, Scene, PerspectiveCamera, PlaneGeometry, ShaderMaterial, Mesh, BufferAttribute, BufferGeometry, HemisphereLight } from 'three';
-import TestEntity from '../../entity/test';
+import NavBall from '../../entity/navball';
 
 export default class Test {
   light: Class<HemisphereLight>;
@@ -16,7 +16,7 @@ export default class Test {
     this.light = new HemisphereLight('#f9b641', '#361448', 1);
     scene.add(this.light);
 
-    this.entities.push(new TestEntity(state));
+    this.entities.push(new NavBall(state));
 
     this.entities.forEach((entity) => {
       scene.add(entity.mesh);
